@@ -16,22 +16,22 @@ create table schools
 
 create table users
 (
-    id        int auto_increment
+    id             int auto_increment
         primary key,
-    school_id int                                       not null,
-    name      varchar(64)                               not null,
-    code      int(6)                                    null,
-    code_date timestamp                                 null,
-    token     varchar(32)                               null,
-    type      enum ('student', 'teacher', 'headmaster') not null,
-    banned_to datetime                                  null,
-    verified  tinyint(1) default 0                      null,
-    date      timestamp  default current_timestamp()    null,
-    constraint users_token_uindex
-        unique (token),
+    school_id      int                                                      not null,
+    name           varchar(64)                                              not null,
+    code           int(6)     default floor(rand() * (999999 + 1) + 100000) null,
+    code_generated timestamp  default current_timestamp()                   not null,
+    token          varchar(32)                                              null,
+    type           enum ('student', 'teacher', 'headmaster')                not null,
+    banned_to      datetime                                                 null,
+    verified       tinyint(1) default 0                                     null,
+    date           timestamp  default current_timestamp()                   null,
     constraint users_schools_id_fk
         foreign key (school_id) references schools (id)
 );
+
+
 
 create table proposals
 (

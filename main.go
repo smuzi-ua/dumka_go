@@ -5,11 +5,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/joho/godotenv"
+	"os"
 )
 
 // todo tests
 func main() {
-	db, err := gorm.Open("mysql", "root:@/main?charset=utf8&parseTime=True&loc=Local")
+	err := godotenv.Load()
+	if err != nil {
+		panic("Error loading .env file: " + err.Error())
+	}
+
+	db, err := gorm.Open("mysql", os.Getenv("DB_URL"))
 
 	if err != nil {
 		panic(err)
@@ -17,14 +24,8 @@ func main() {
 
 	server := gin.Default()
 
-	// making database available for every gin route
-	server.Use(func(c *gin.Context) {
-		c.Set("DB", db)
-		c.Next()
-	})
-
 	// this is where all the magic happens
-	src.Bootstrap(server)
+	src.Bootstrap(server, db)
 
 	err = server.Run()
 

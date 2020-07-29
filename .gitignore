@@ -1,3 +1,5 @@
 .env
-.idea
+.env.example
 go.sum
+
+.idea

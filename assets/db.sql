@@ -7,9 +7,10 @@ create table report_categories
 
 create table schools
 (
-    id   int auto_increment
+    id      int auto_increment
         primary key,
-    name varchar(256) null,
+    name    varchar(256) null,
+    display tinyint(1)   not null,
     constraint schools_name_uindex
         unique (name)
 );
@@ -18,20 +19,19 @@ create table users
 (
     id             int auto_increment
         primary key,
-    school_id      int                                                      not null,
-    name           varchar(64)                                              not null,
-    code           int(6)     default floor(rand() * (999999 + 1) + 100000) null,
-    code_generated timestamp  default current_timestamp()                   not null,
-    token          varchar(32)                                              null,
-    type           enum ('student', 'teacher', 'headmaster')                not null,
-    banned_to      datetime                                                 null,
-    verified       tinyint(1) default 0                                     null,
-    date           timestamp  default current_timestamp()                   null,
+    school_id      int                                                not null,
+    name           varchar(128)                                       not null,
+    nickname       varchar(32)                                        null,
+    code           int(6)     default floor(rand() * 900000 + 100000) null,
+    code_generated timestamp  default current_timestamp()             null,
+    token          varchar(32)                                        null,
+    type           enum ('student', 'teacher', 'headmaster')          not null,
+    banned_to      datetime                                           null,
+    verified       tinyint(1) default 0                               null,
+    date           timestamp  default current_timestamp()             null,
     constraint users_schools_id_fk
         foreign key (school_id) references schools (id)
 );
-
-
 
 create table proposals
 (
@@ -39,7 +39,7 @@ create table proposals
         primary key,
     user_id   int                                   not null,
     title     varchar(512)                          not null,
-    text      text                                  null,
+    text      text                                  not null,
     anonymous tinyint(1)                            not null,
     date      timestamp default current_timestamp() null,
     constraint proposals_users_id_fk
@@ -94,12 +94,12 @@ create table comment_reports
 
 create table proposal_likes
 (
-    id           int auto_increment
+    id          int auto_increment
         primary key,
     proposal_id int                                   not null,
-    user_id      int                                   not null,
-    feedback     enum ('like', 'dislike')              not null,
-    date         timestamp default current_timestamp() null,
+    user_id     int                                   not null,
+    feedback    enum ('like', 'dislike')              not null,
+    date        timestamp default current_timestamp() null,
     constraint proposal_likes_proposals_id_fk
         foreign key (proposal_id) references proposals (id),
     constraint proposal_likes_users_id_fk
@@ -114,7 +114,7 @@ create table proposal_reports
     user_id         int                                   not null,
     report_category int                                   not null,
     comment         text                                  null,
-    date            timestamp default current_timestamp() not null,
+    date            timestamp default current_timestamp() null,
     constraint proposal_reports_proposals_id_fk
         foreign key (proposal_id) references proposals (id),
     constraint proposal_reports_report_categories_id_fk

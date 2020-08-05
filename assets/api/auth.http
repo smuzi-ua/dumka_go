@@ -1,0 +1,9 @@
+POST {{server}}/v1/auth
+Content-Type: application/json
+
+{
+  "school": 1,
+  "name": "User Name"
+}
+
+###

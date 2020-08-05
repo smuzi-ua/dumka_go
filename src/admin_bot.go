@@ -30,7 +30,7 @@ func RunAdminBot(db *gorm.DB) {
 
 		var response = ""
 		for _, school := range schools {
-			response += "School #" + strconv.FormatInt(school.Id, 10) + ": " + school.Name + "\n"
+			response += "School #" + strconv.Itoa(school.Id) + ": " + school.Name + "\n"
 		}
 
 		_, _ = b.Send(m.Sender, response)

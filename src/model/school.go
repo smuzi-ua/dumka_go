@@ -2,6 +2,7 @@ package model
 
 // todo add other models
 type School struct {
-	Id   int64  `json:"id"`
-	Name string `json:"name"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	Display bool   `json:"display"`
 }

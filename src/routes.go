@@ -6,5 +6,15 @@ import (
 )
 
 func Routes(server *gin.Engine) {
-	server.GET("/schools", api.SchoolsRoute)
+
+	v1 := server.Group("/v1")
+
+	{
+		v1.POST("/status", api.StatusRoute)
+		v1.POST("/schools", api.SchoolsRoute)
+		v1.POST("/report_categories", api.ReportCategoriesRoute)
+
+		v1.POST("/auth", api.AuthRoute)
+	}
+
 }

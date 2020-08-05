@@ -6,7 +6,7 @@ import (
 )
 
 func Bootstrap(server *gin.Engine, db *gorm.DB) {
-	// making database available for routes
+	// making database visible to routes
 	server.Use(func(c *gin.Context) {
 		c.Set("DB", db)
 		c.Next()

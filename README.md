@@ -3,10 +3,8 @@ Before trying to run the application, please rename `.env.example` to `.env` and
 
 # DB structure
 
-![database structure](assets/db.png)
-
-Check out `assets/db.sql` for the full SQL code (tested on `MariaDB`)
-
+Check out `assets/db.sql` for the full SQL code (tested on `MariaDB`).
+Visualisation of the database is located [here](assets/db.png).
 # API Endpoints
 
 These examples were taken from projects mainly using [Django Rest

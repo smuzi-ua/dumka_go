@@ -19,16 +19,18 @@ create table users
 (
     id             int auto_increment
         primary key,
-    school_id      int                                                not null,
-    name           varchar(128)                                       not null,
-    nickname       varchar(32)                                        null,
-    code           int(6)     default floor(rand() * 900000 + 100000) null,
-    code_generated timestamp  default current_timestamp()             null,
-    token          varchar(32)                                        null,
-    type           enum ('student', 'teacher', 'headmaster')          not null,
-    banned_to      timestamp                                          null,
-    verified       tinyint(1) default 0                               null,
-    date           timestamp  default current_timestamp()             null,
+    school_id      int                                                                               not null,
+    name           varchar(128)                                                                      not null,
+    nickname       varchar(32)                                                                       not null,
+    code           int(6)                                    default floor(rand() * 900000 + 100000) null,
+    code_generated timestamp                                 default current_timestamp()             null,
+    token          varchar(32)                                                                       null,
+    type           enum ('student', 'teacher', 'headmaster') default 'student'                       not null,
+    banned_to      timestamp                                                                         null,
+    verified       tinyint(1)                                default 0                               null,
+    date           timestamp                                 default current_timestamp()             null,
+    constraint users_nickname_uindex
+        unique (nickname),
     constraint users_schools_id_fk
         foreign key (school_id) references schools (id)
 );
@@ -122,3 +124,4 @@ create table proposal_reports
     constraint proposal_reports_users_id_fk
         foreign key (user_id) references users (id)
 );
+

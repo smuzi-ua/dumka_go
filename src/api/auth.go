@@ -13,13 +13,18 @@ import (
 func AuthRoute(c *gin.Context) {
 
 	var q struct {
-		School int    `form:"school" binding:"required"`
-		Name   string `form:"name" binding:"required"`
-		Code   int    `form:"code"`
+		School   int    `form:"school" binding:"required"`
+		Nickname string `form:"nickname" binding:"required"`
+		Name     string `form:"name" binding:"required"`
+		Code     int    `form:"code"`
 	}
 
 	if err := c.ShouldBind(&q); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"ok": false, "error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":         false,
+			"error":      err.Error(),
+			"error_code": -1,
+		})
 		return
 	}
 
@@ -28,22 +33,25 @@ func AuthRoute(c *gin.Context) {
 	// validating School
 	var schoolCount int
 	db.Table("schools").Where(model.School{Id: q.School}).Count(&schoolCount)
-
 	if schoolCount == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"ok": false, "error": "SCHOOL DOES NOT EXIST"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":         false,
+			"error":      "SCHOOL DOES NOT EXIST",
+			"error_code": -1,
+		})
 		return
 	}
 
 	if q.Code == 0 {
 
 		var userCount int
-		db.Table("users").Where(model.User{SchoolId: q.School, Name: q.Name}).Count(&userCount)
+		db.Table("users").Where(model.User{SchoolId: q.School, Nickname: q.Nickname}).Count(&userCount)
 
 		if userCount == 0 {
-			db.Create(model.User{
+			db.Create(&model.User{
 				SchoolId: q.School,
 				Name:     q.Name,
-				Type:     "student",
+				Nickname: q.Nickname,
 			})
 		}
 
@@ -54,6 +62,44 @@ func AuthRoute(c *gin.Context) {
 		return
 	}
 
-	// todo AUTH
+	var user model.User
 
+	db.Where(model.User{SchoolId: q.School, Nickname: q.Nickname, Name: q.Name}).Take(&user)
+
+	if user.Name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":         false,
+			"error":      "USER DOES NOT EXIST",
+			"error_code": -1,
+		})
+		return
+	}
+
+	if !user.Verified {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":         false,
+			"error":      "USER IS NOT VERIFIED",
+			"error_code": 1,
+		})
+		return
+	}
+
+	if user.Code != q.Code {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":         false,
+			"error":      "CODE DOES NOT MATCH",
+			"error_code": 2,
+		})
+		return
+	}
+
+	user.UpdateToken()
+	user.UpdateCode()
+	db.Save(&user)
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok":        true,
+		"user_type": user.Type,
+		"token":     user.Token,
+	})
 }

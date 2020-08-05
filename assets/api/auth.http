@@ -1,9 +1,31 @@
+# If error_code is -1, the error shouldn't be specified to the user: it's a system error.
+# Possible error codes > 0:
+# 1: USER IS NOT VERIFIED
+# 2: CODE DOES NOT MATCH
+
+# Here we register a new user (if it doesn't exist yet), we don't pass the code because we don't know it yet.
+# This doesn't return anything except ok
 POST {{server}}/v1/auth
 Content-Type: application/json
 
 {
   "school": 1,
-  "name": "User Name"
+  "nickname": "user103",
+  "name": "Alice Smith"
+}
+
+###
+
+# Now we know the code so we can pass it to the endpoint
+# This returns token and user_type (student, teacher or headmaster)
+POST {{server}}/v1/auth
+Content-Type: application/json
+
+{
+  "school": 1,
+  "nickname": "user103",
+  "name": "Alice Smith",
+  "code": 456177
 }
 
 ###

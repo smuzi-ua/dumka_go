@@ -6,7 +6,9 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
+	"math/rand"
 	"os"
+	"time"
 )
 
 // todo tests
@@ -21,6 +23,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	rand.Seed(time.Now().UnixNano())
 
 	server := gin.Default()
 

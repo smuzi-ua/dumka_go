@@ -7,4 +7,5 @@ require (
 	github.com/jinzhu/gorm v1.9.15
 	github.com/joho/godotenv v1.3.0
 	gopkg.in/tucnak/telebot.v2 v2.3.3
+	github.com/thanhpk/randstr v1.0.4
 )

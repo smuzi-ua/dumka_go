@@ -18,8 +18,8 @@ is running on 'http://testserver/'.
 
 Open endpoints require no Authentication.
 
-* `POST /v1/status` - _API Status_ ([Example](assets/api/status.http) | [Route](src/api/status.go))
-* `POST /v1/schools` - _Schools_  ([Example](assets/api/schools.http) | [Route](src/api/schools.go))
-* `POST /v1/report_categories` - _Report Categories_ ([Example](assets/api/report_categories.http) | [Route](src/api/report_categories.go))
-* `POST /v1/auth` - _Authentication_ ([Example](assets/api/report_categories.http) | [Route](src/api/report_categories.go))
+* `POST /v1/status` - _API Status_ ([Docs](assets/api/status.http) | [Code](src/api/status.go))
+* `POST /v1/schools` - _Schools_  ([Docs](assets/api/schools.http) | [Code](src/api/schools.go))
+* `POST /v1/report_categories` - _Report Categories_ ([Docs](assets/api/report_categories.http) | [Code](src/api/report_categories.go))
+* `POST /v1/auth` - _Authentication_ ([Docs](assets/api/report_categories.http) | [Code](src/api/report_categories.go))
 

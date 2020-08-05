@@ -1,4 +1,4 @@
-package api
+package route
 
 import (
 	"github.com/DumkaUA/dumka_go/src/model"

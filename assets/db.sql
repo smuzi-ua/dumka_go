@@ -14,7 +14,6 @@ create table schools
     constraint schools_name_uindex
         unique (name)
 );
-
 create table users
 (
     id             int auto_increment
@@ -31,6 +30,8 @@ create table users
     date           timestamp                                 default current_timestamp()             null,
     constraint users_nickname_uindex
         unique (nickname),
+    constraint users_token_uindex
+        unique (token),
     constraint users_schools_id_fk
         foreign key (school_id) references schools (id)
 );

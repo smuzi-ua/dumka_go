@@ -1,4 +1,4 @@
-package api
+package route
 
 import (
 	"github.com/DumkaUA/dumka_go/src/model"
@@ -8,7 +8,6 @@ import (
 )
 
 // todo consider bruteforce
-// todo use nickname instead of real name (to avoid repetition)
 
 func AuthRoute(c *gin.Context) {
 
@@ -66,7 +65,8 @@ func AuthRoute(c *gin.Context) {
 
 	db.Where(model.User{SchoolId: q.School, Nickname: q.Nickname, Name: q.Name}).Take(&user)
 
-	if user.Name == "" {
+	// if user doesn't exist
+	if user.Id == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"ok":         false,
 			"error":      "USER DOES NOT EXIST",

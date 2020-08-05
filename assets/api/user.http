@@ -1,0 +1,9 @@
+# Returns name, nickname. school and type of user.
+POST {{server}}/v1/user
+Content-Type: application/json
+
+{
+  "token": "{{user_token}}"
+}
+
+###

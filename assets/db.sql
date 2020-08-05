@@ -26,7 +26,7 @@ create table users
     code_generated timestamp  default current_timestamp()             null,
     token          varchar(32)                                        null,
     type           enum ('student', 'teacher', 'headmaster')          not null,
-    banned_to      datetime                                           null,
+    banned_to      timestamp                                          null,
     verified       tinyint(1) default 0                               null,
     date           timestamp  default current_timestamp()             null,
     constraint users_schools_id_fk

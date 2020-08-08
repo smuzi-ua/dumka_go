@@ -9,3 +9,7 @@ type CommentLike struct {
 	Feedback  string    `json:"feedback"`
 	Date      time.Time `json:"date" gorm:"default"`
 }
+
+func (CommentLike) TableName() string {
+	return "comment_likes"
+}

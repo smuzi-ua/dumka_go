@@ -1,5 +1,5 @@
 # Returns name, nickname. school and type of user.
-POST {{server}}/v1/user
+POST {{server}}/v1/u/user
 Content-Type: application/json
 
 {

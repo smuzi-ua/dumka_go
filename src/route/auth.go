@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"github.com/DumkaUA/dumka_go/src/model"
 	"github.com/DumkaUA/dumka_go/src/util"
 	"github.com/gin-gonic/gin"
@@ -29,9 +30,10 @@ func AuthRoute(c *gin.Context) {
 
 	db := util.GetDB(c)
 
+	fmt.Println(model.School{}.TableName())
 	// validating School
 	var schoolCount int
-	db.Table("schools").Where(model.School{Id: q.School}).Count(&schoolCount)
+	db.Table(model.School{}.TableName()).Where(model.School{Id: q.School}).Count(&schoolCount)
 	if schoolCount == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"ok":         false,
@@ -44,7 +46,7 @@ func AuthRoute(c *gin.Context) {
 	if q.Code == 0 {
 
 		var userCount int
-		db.Table("users").Where(model.User{SchoolId: q.School, Nickname: q.Nickname}).Count(&userCount)
+		db.Table(model.User{}.TableName()).Where(model.User{SchoolId: q.School, Nickname: q.Nickname}).Count(&userCount)
 
 		if userCount == 0 {
 			db.Create(&model.User{

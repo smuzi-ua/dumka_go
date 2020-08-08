@@ -10,3 +10,7 @@ type ProposalReport struct {
 	Comment        string    `json:"comment"`
 	Date           time.Time `json:"date" gorm:"default"`
 }
+
+func (ProposalReport) TableName() string {
+	return "proposal_reports"
+}

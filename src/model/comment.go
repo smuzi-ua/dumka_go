@@ -10,3 +10,7 @@ type Comment struct {
 	Anonymous  bool      `json:"anonymous"`
 	Date       time.Time `json:"date" gorm:"default"`
 }
+
+func (Comment) TableName() string {
+	return "comments"
+}

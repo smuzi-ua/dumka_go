@@ -36,6 +36,15 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
+		if !user.Verified {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"ok":         false,
+				"error":      "USER'S ACCOUNT IS NOT VERIFIED",
+				"error_code": -1,
+			})
+			return
+		}
+
 		c.Set("USER", &user)
 
 		c.Next()

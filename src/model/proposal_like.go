@@ -9,3 +9,7 @@ type ProposalLike struct {
 	Feedback   string    `json:"feedback"`
 	Date       time.Time `json:"date" gorm:"default"`
 }
+
+func (ProposalLike) TableName() string {
+	return "proposal_likes"
+}

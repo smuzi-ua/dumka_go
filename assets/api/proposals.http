@@ -1,0 +1,9 @@
+# Returns all proposals of user's school
+POST {{server}}/v1/u/proposals
+Content-Type: application/json
+
+{
+  "token": "{{user_token}}"
+}
+
+###

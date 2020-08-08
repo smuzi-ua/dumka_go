@@ -14,8 +14,8 @@ func StatusRoute(c *gin.Context) {
 
 	db := util.GetDB(c)
 
-	db.Table("schools").Where(model.School{Display: true}).Count(&schools)
-	db.Table("users").Where(model.User{Verified: true}).Count(&users)
+	db.Table(model.School{}.TableName()).Where(model.School{Display: true}).Count(&schools)
+	db.Table(model.User{}.TableName()).Where(model.User{Verified: true}).Count(&users)
 
 	c.JSON(http.StatusOK, gin.H{
 		"ok": true,

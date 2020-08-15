@@ -38,13 +38,14 @@ create table users
 
 create table proposals
 (
-    id        int auto_increment
+    id          int auto_increment
         primary key,
-    user_id   int                                   not null,
-    title     varchar(512)                          not null,
-    text      text                                  not null,
-    anonymous tinyint(1)                            not null,
-    date      timestamp default current_timestamp() null,
+    user_id     int                                   not null,
+    title       varchar(512)                          not null,
+    text        text                                  not null,
+    anonymous   tinyint(1)                            not null,
+    date        timestamp default current_timestamp() null,
+    implemented tinyint(1)
     constraint proposals_users_id_fk
         foreign key (user_id) references users (id)
 );
@@ -126,3 +127,9 @@ create table proposal_reports
         foreign key (user_id) references users (id)
 );
 
+create table admins
+(
+    id                int auto_increment
+        primary key,
+    telegram_nickname varchar(32) not null,
+);

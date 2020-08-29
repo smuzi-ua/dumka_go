@@ -1,0 +1,14 @@
+# Returns all proposals of user's school
+# deadline: day, 2day, week, month
+POST {{server}}/v1/u/proposals_add
+Content-Type: application/json
+
+{
+  "token": "{{user_token}}",
+  "title": "proposal title",
+  "text": "proposal text",
+  "deadline": "day",
+  "anonymous": true
+}
+
+###

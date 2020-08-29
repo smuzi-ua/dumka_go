@@ -1,6 +1,7 @@
-package route
+package route_user
 
 import (
+	"fmt"
 	"github.com/DumkaUA/dumka_go/src/model"
 	"github.com/DumkaUA/dumka_go/src/util"
 	"github.com/gin-gonic/gin"
@@ -15,14 +16,21 @@ func ProposalsRoute(c *gin.Context) {
 	var data []model.Proposal
 	var displayData []model.Proposal
 
+	stages := "('active', 'in_progress', 'archive')"
+
+	if u.Type == "supervisor" {
+		stages = "('active', 'in_progress', 'archive', 'none')"
+	}
+
 	// todo there is probably a better way to do that
-	db.Where("user_id IN (SELECT id FROM users WHERE school_id = ?)", u.SchoolId).Find(&data)
+	fmt.Println(db.Where("user_id IN (SELECT id FROM users WHERE school_id = ?) AND stage IN "+stages, u.SchoolId).Find(&data).Error)
 
 	for _, r := range data {
 		if r.Anonymous {
-			displayData = append(displayData, model.Proposal{Id: r.Id, Title: r.Title, Text: r.Text, Date: r.Date, Anonymous: r.Anonymous})
+			r.UserId = 0
+			displayData = append(displayData, r)
 		} else {
-			displayData = append(displayData, model.Proposal{Id: r.Id, Title: r.Title, Text: r.Text, Date: r.Date, Anonymous: r.Anonymous, UserId: r.UserId})
+			displayData = append(displayData, r)
 		}
 	}
 

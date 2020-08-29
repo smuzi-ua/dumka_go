@@ -1,4 +1,4 @@
-package route
+package route_open
 
 import (
 	"github.com/DumkaUA/dumka_go/src/model"
@@ -7,12 +7,12 @@ import (
 	"net/http"
 )
 
-func ReportCategoriesRoute(c *gin.Context) {
-	var categories []model.ReportCategory
+func SchoolsRoute(c *gin.Context) {
+	var schools []model.School
 	db := util.GetDB(c)
-	db.Find(&categories)
+	db.Where(&model.School{Display: true}).Find(&schools)
 	c.JSON(http.StatusOK, gin.H{
 		"ok":   true,
-		"data": categories,
+		"data": schools,
 	})
 }

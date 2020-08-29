@@ -12,6 +12,7 @@ import (
 )
 
 // todo tests
+// todo organize all errors in a nice files and give them unique id
 func main() {
 	err := godotenv.Load()
 	if err != nil {

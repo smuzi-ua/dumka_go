@@ -15,7 +15,7 @@ func isAdmin(username string, db *gorm.DB) bool { //checks whether a bot user ha
 	var admins []model.Admin
 	db.Find(&admins)
 	for i := 0; i < len(admins); i++ {
-		if username == admins[i].Telegram_nickname {
+		if username == admins[i].TelegramNickname {
 			return true
 		}
 	}
@@ -37,7 +37,7 @@ func RunAdminBot(db *gorm.DB) {
 		if isAdmin(m.Sender.Username, db) {
 			var admin = model.Admin{
 				//what should I do with ID?
-				Telegram_nickname: strings.Split(m.Text, " ")[1],
+				TelegramNickname: strings.Split(m.Text, " ")[1],
 			}
 			db.Create(&admin)
 		}

@@ -24,7 +24,7 @@ create table users
     code           int(6)                                    default floor(rand() * 900000 + 100000) null,
     code_generated timestamp                                 default current_timestamp()             null,
     token          varchar(32)                                                                       null,
-    type           enum ('student', 'teacher', 'headmaster') default 'student'                       not null,
+    type           enum ('student', 'supervisor', 'teacher', 'headmaster') default 'student'         not null,
     banned_to      timestamp                                                                         null,
     verified       tinyint(1)                                default 0                               null,
     date           timestamp                                 default current_timestamp()             null,
@@ -38,14 +38,15 @@ create table users
 
 create table proposals
 (
-    id          int auto_increment
+    id        int auto_increment
         primary key,
-    user_id     int                                   not null,
-    title       varchar(512)                          not null,
-    text        text                                  not null,
-    anonymous   tinyint(1)                            not null,
-    date        timestamp default current_timestamp() null,
-    implemented tinyint(1)
+    user_id   int                                                                           not null,
+    anonymous tinyint(1)                                                                    not null,
+    title     varchar(512)                                                                  not null,
+    text      text                                                                          not null,
+    stage     enum ('none', 'active', 'in_progress', 'archive') default 'none'              null,
+    deadline  enum ('day', '2day', 'week', 'month')                                         not null,
+    date      timestamp                                         default current_timestamp() null,
     constraint proposals_users_id_fk
         foreign key (user_id) references users (id)
 );
@@ -127,9 +128,3 @@ create table proposal_reports
         foreign key (user_id) references users (id)
 );
 
-create table admins
-(
-    id                int auto_increment
-        primary key,
-    telegram_nickname varchar(32) not null,
-);

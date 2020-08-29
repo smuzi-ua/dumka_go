@@ -4,6 +4,7 @@ import (
 	"github.com/DumkaUA/dumka_go/src/model"
 	"github.com/DumkaUA/dumka_go/src/util"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"net/http"
 )
 
@@ -13,7 +14,7 @@ func Auth() gin.HandlerFunc {
 			Token string `form:"token" binding:"required"`
 		}
 
-		if err := c.ShouldBind(&q); err != nil {
+		if err := c.ShouldBindBodyWith(&q, binding.JSON); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"ok":         false,
 				"error":      err.Error(),

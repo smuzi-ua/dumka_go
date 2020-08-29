@@ -1,4 +1,4 @@
-package route
+package route_user
 
 import (
 	"github.com/DumkaUA/dumka_go/src/util"

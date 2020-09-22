@@ -1,3 +1,3 @@
-POST {{server}}/v1/status
+GET {{server}}/v1/status
 
 ###

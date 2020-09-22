@@ -1,9 +1,7 @@
 # Returns name, nickname. school and type of user.
-POST {{server}}/v1/u/user
+GET {{server}}/v1/u/user
 Content-Type: application/json
+Authorization: Token {{user_token}}
 
-{
-  "token": "{{user_token}}"
-}
 
 ###

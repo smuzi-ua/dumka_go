@@ -2,9 +2,10 @@
 # deadline: day, 2day, week, month
 POST {{server}}/v1/u/proposals_add
 Content-Type: application/json
+Authorization: Token {{user_token}}
+
 
 {
-  "token": "{{user_token}}",
   "title": "proposal title",
   "text": "proposal text",
   "deadline": "day",

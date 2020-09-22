@@ -1,9 +1,6 @@
 # Returns school's name & users
-POST {{server}}/v1/u/school
+GET {{server}}/v1/u/school
 Content-Type: application/json
-
-{
-  "token": "{{user_token}}"
-}
+Authorization: Token {{user_token}}
 
 ###

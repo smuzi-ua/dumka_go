@@ -15,14 +15,14 @@ func Routes(server *gin.Engine) {
 	v1s.Use(middleware.Auth())
 
 	{
-		v1.POST("/status", route_open.StatusRoute)
-		v1.POST("/schools", route_open.SchoolsRoute)
-		v1.POST("/report_categories", route_open.ReportCategoriesRoute)
+		v1.GET("/status", route_open.StatusRoute)
+		v1.GET("/schools", route_open.SchoolsRoute)
+		v1.GET("/report_categories", route_open.ReportCategoriesRoute)
 		v1.POST("/auth", route_open.AuthRoute)
 
-		v1s.POST("/user", route_user.UserRoute)
-		v1s.POST("/proposals", route_user.ProposalsRoute)
+		v1s.GET("/user", route_user.UserRoute)
+		v1s.GET("/proposals", route_user.ProposalsRoute)
 		v1s.POST("/proposals_add", route_user.ProposalsAddRoute)
-		v1s.POST("/school", route_user.SchoolRoute)
+		v1s.GET("/school", route_user.SchoolRoute)
 	}
 }

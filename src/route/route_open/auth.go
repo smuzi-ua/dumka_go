@@ -23,7 +23,7 @@ func AuthRoute(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"ok":         false,
 			"error":      err.Error(),
-			"error_code": -1,
+			"error_code": -2,
 		})
 		return
 	}
@@ -38,7 +38,7 @@ func AuthRoute(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"ok":         false,
 			"error":      "SCHOOL DOES NOT EXIST",
-			"error_code": -1,
+			"error_code": -3,
 		})
 		return
 	}
@@ -95,13 +95,12 @@ func AuthRoute(c *gin.Context) {
 		return
 	}
 
-	user.UpdateToken()
 	user.UpdateCode()
 	db.Save(&user)
 
 	c.JSON(http.StatusOK, gin.H{
 		"ok":        true,
 		"user_type": user.Type,
-		"token":     user.Token,
+		"token":     user.GenerateAuthToken(),
 	})
 }

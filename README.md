@@ -22,7 +22,7 @@ The process of acquiring an auth token consists of two POST requests to `v1/auth
 
 Completed second request, you will receive `token`.
 Pass the token as a header parameter to every endpoint that needs authorization:
-`Authorization: Token Y8dnF2aBSFEtZ2HTbzTsSQyVevSJzOcP`
+`Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpb3QiOjE2MDIwOTM0ODksInVzZXIiOjF9.teHbsPmW4t65mtfwqhQhhDhkrM13EoQEcY2eK4dxr7E`
 
 ### Open Endpoints
 
@@ -39,3 +39,27 @@ Open endpoints require no Authentication.
 * `GET` `/v1/u/school` - _School information (list of students & name of the school)_ ([Example](assets/api/route_user/school.http) | [Code](src/route/route_user/school.go))
 * `GET` `/v1/u/proposals` - _List of proposals_ ([Example](assets/api/route_user/proposals.http) | [Code](src/route/route_user/proposals.go))
 * `POST` `/v1/u/proposals_add` - _Create a new proposal_ ([Example](assets/api/route_user/proposals_add.http) | [Code](src/route/route_user/proposals_add.go))
+
+### Error Codes
+
+If something is wrong with your request or the server, you will get an error like this:
+``` json
+{
+  "ok": false
+  "error": "Key: 'Authorization' Error:Field validation for 'Authorization' failed on the 'required' tag",
+  "error_code": -2,
+}
+```
+
+If `error_code` is negative, the problem is on your side, you don't have to handle every error distinctly. If the code is positive - the error should be handled (there is something wrong with user's input).
+The `error` string is generated either by gin (when request is invalid) or specified directly in the code. It's not localized - localization should be done on the client.
+
+
+#### General error codes:
+ - `-1` - invalid request (missing parameters or some problems with validation)
+
+#### Auth
+ - `-2` - user does not exist
+ - `-3` - user with this token does not exist
+ - `2` - account is not verified/blocked (by the supervisor)
+ 

@@ -20,7 +20,7 @@ func Auth() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"ok":         false,
 				"error":      err.Error(),
-				"error_code": -2,
+				"error_code": -1,
 			})
 			return
 		}
@@ -29,7 +29,7 @@ func Auth() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"ok":         false,
 				"error":      "Weird Authorization parameter :/",
-				"error_code": -2,
+				"error_code": -1,
 			})
 			return
 		}
@@ -40,7 +40,9 @@ func Auth() gin.HandlerFunc {
 		db := util.GetDB(c)
 
 		var user model.User
-		db.Where(model.User{Token: token}).First(&user)
+
+		user.Id = user.VerifyAuthToken(token)
+		db.Where(model.User{Id: user.Id}).First(&user)
 
 		if user.Id == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -55,7 +57,7 @@ func Auth() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"ok":         false,
 				"error":      "USER'S ACCOUNT IS NOT VERIFIED",
-				"error_code": -1,
+				"error_code": 2,
 			})
 			return
 		}

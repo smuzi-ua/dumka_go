@@ -14,5 +14,5 @@ func Bootstrap(server *gin.Engine, db *gorm.DB) {
 
 	Routes(server)
 
-	//go RunAdminBot(db)
+	go RunAdminBot(db)
 }
